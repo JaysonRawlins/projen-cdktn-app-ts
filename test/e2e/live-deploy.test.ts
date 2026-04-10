@@ -60,6 +60,7 @@ describe('E2E live deploy', () => {
           constructs: '*',
         },
         devDependencies: {
+          '@types/node': '*',
           'cdktn-cli': '*',
           'ts-node': '*',
           'typescript': '*',
