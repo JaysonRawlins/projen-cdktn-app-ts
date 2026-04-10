@@ -232,11 +232,31 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --updateSnapshot",
-          "receiveArgs": true
+          "exec": "jest --passWithNoTests --updateSnapshot --testPathIgnorePatterns=test/integration --testPathIgnorePatterns=test/e2e"
         },
         {
           "spawn": "eslint"
+        }
+      ]
+    },
+    "test:e2e": {
+      "name": "test:e2e",
+      "description": "Run E2E live deploy tests",
+      "env": {
+        "AWS_REGION": "us-east-2"
+      },
+      "steps": [
+        {
+          "exec": "jest --testPathPatterns=test/e2e --passWithNoTests"
+        }
+      ]
+    },
+    "test:integration": {
+      "name": "test:integration",
+      "description": "Run integration tests",
+      "steps": [
+        {
+          "exec": "jest --testPathPatterns=test/integration --passWithNoTests"
         }
       ]
     },
@@ -274,7 +294,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,ts-node,typescript,fs-extra"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,ts-node,typescript,fs-extra"
         },
         {
           "exec": "yarn install --check-files"
