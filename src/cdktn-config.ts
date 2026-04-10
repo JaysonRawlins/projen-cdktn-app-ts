@@ -29,6 +29,19 @@ export interface CdktnConfigCommonOptions {
    * @default { excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true" }
    */
   readonly context?: Record<string, any>;
+
+  /**
+   * The name of the Terraform binary to use.
+   * Set to "tofu" to use OpenTofu instead of Terraform.
+   *
+   * Note: Due to an upstream cdktn-cli issue, the binary name config may not
+   * propagate correctly. When set to "tofu", the TERRAFORM_BINARY_NAME env var
+   * is also set on all cdktn tasks as a workaround.
+   *
+   * @see https://github.com/open-constructs/cdk-terrain/issues/96
+   * @default "terraform"
+   */
+  readonly terraformBinaryName?: string;
 }
 
 export interface TerraformDependencyConstraint {
@@ -78,6 +91,7 @@ export class CdktnConfig extends Component {
         output: this.cdktfOut,
         terraformProviders: options.terraformProviders,
         terraformModules: options.terraformModules,
+        terraformBinaryName: options.terraformBinaryName,
         context: {
           excludeStackIdFromLogicalIds: 'true',
           allowSepCharsInLogicalIds: 'true',

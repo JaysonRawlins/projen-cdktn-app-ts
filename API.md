@@ -411,18 +411,25 @@ Adds standard CDK Terrain tasks to your project.
 ```typescript
 import { CdktnTasks } from '@jjrawlins/projen-cdktn-app-ts'
 
-new CdktnTasks(project: Project)
+new CdktnTasks(project: Project, options?: CdktnTasksOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTasks.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTasks.Initializer.parameter.options">options</a></code> | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions">CdktnTasksOptions</a></code> | *No description.* |
 
 ---
 
 ##### `project`<sup>Required</sup> <a name="project" id="@jjrawlins/projen-cdktn-app-ts.CdktnTasks.Initializer.parameter.project"></a>
 
 - *Type:* projen.Project
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="@jjrawlins/projen-cdktn-app-ts.CdktnTasks.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions">CdktnTasksOptions</a>
 
 ---
 
@@ -2259,6 +2266,7 @@ const cdktnConfigCommonOptions: CdktnConfigCommonOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.cdktfOut">cdktfOut</a></code> | <code>string</code> | cdktf.out directory. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Terraform context features. |
+| <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.terraformBinaryName">terraformBinaryName</a></code> | <code>string</code> | The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.terraformModules">terraformModules</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform modules to install. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.terraformProviders">terraformProviders</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform providers to install. |
 
@@ -2287,6 +2295,25 @@ public readonly context: {[ key: string ]: any};
 - *Default:* { excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true" }
 
 Terraform context features.
+
+---
+
+##### `terraformBinaryName`<sup>Optional</sup> <a name="terraformBinaryName" id="@jjrawlins/projen-cdktn-app-ts.CdktnConfigCommonOptions.property.terraformBinaryName"></a>
+
+```typescript
+public readonly terraformBinaryName: string;
+```
+
+- *Type:* string
+- *Default:* "terraform"
+
+The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform.
+
+Note: Due to an upstream cdktn-cli issue, the binary name config may not
+propagate correctly. When set to "tofu", the TERRAFORM_BINARY_NAME env var
+is also set on all cdktn tasks as a workaround.
+
+> [https://github.com/open-constructs/cdk-terrain/issues/96](https://github.com/open-constructs/cdk-terrain/issues/96)
 
 ---
 
@@ -2332,6 +2359,7 @@ const cdktnConfigOptions: CdktnConfigOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.cdktfOut">cdktfOut</a></code> | <code>string</code> | cdktf.out directory. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Terraform context features. |
+| <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.terraformBinaryName">terraformBinaryName</a></code> | <code>string</code> | The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.terraformModules">terraformModules</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform modules to install. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.terraformProviders">terraformProviders</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform providers to install. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.app">app</a></code> | <code>string</code> | The command line to execute in order to synthesize the CDKTN application (language specific). |
@@ -2361,6 +2389,25 @@ public readonly context: {[ key: string ]: any};
 - *Default:* { excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true" }
 
 Terraform context features.
+
+---
+
+##### `terraformBinaryName`<sup>Optional</sup> <a name="terraformBinaryName" id="@jjrawlins/projen-cdktn-app-ts.CdktnConfigOptions.property.terraformBinaryName"></a>
+
+```typescript
+public readonly terraformBinaryName: string;
+```
+
+- *Type:* string
+- *Default:* "terraform"
+
+The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform.
+
+Note: Due to an upstream cdktn-cli issue, the binary name config may not
+propagate correctly. When set to "tofu", the TERRAFORM_BINARY_NAME env var
+is also set on all cdktn tasks as a workaround.
+
+> [https://github.com/open-constructs/cdk-terrain/issues/96](https://github.com/open-constructs/cdk-terrain/issues/96)
 
 ---
 
@@ -2444,6 +2491,43 @@ public readonly constructsVersion: string;
 - *Default:* the default is "latest".
 
 Minimum version of the `constructs` library to depend on.
+
+---
+
+### CdktnTasksOptions <a name="CdktnTasksOptions" id="@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions"></a>
+
+Options for `CdktnTasks`.
+
+#### Initializer <a name="Initializer" id="@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions.Initializer"></a>
+
+```typescript
+import { CdktnTasksOptions } from '@jjrawlins/projen-cdktn-app-ts'
+
+const cdktnTasksOptions: CdktnTasksOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions.property.terraformBinaryName">terraformBinaryName</a></code> | <code>string</code> | The Terraform binary name. |
+
+---
+
+##### `terraformBinaryName`<sup>Optional</sup> <a name="terraformBinaryName" id="@jjrawlins/projen-cdktn-app-ts.CdktnTasksOptions.property.terraformBinaryName"></a>
+
+```typescript
+public readonly terraformBinaryName: string;
+```
+
+- *Type:* string
+- *Default:* "terraform"
+
+The Terraform binary name.
+
+When set to something other than "terraform",
+the TERRAFORM_BINARY_NAME env var is set on all tasks as a workaround
+for upstream cdktn-cli binary resolution issues.
 
 ---
 
@@ -2622,6 +2706,7 @@ const cdktnTypeScriptAppOptions: CdktnTypeScriptAppOptions = { ... }
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.cdktfOut">cdktfOut</a></code> | <code>string</code> | cdktf.out directory. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Terraform context features. |
+| <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.terraformBinaryName">terraformBinaryName</a></code> | <code>string</code> | The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.terraformModules">terraformModules</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform modules to install. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.terraformProviders">terraformProviders</a></code> | <code>string \| <a href="#@jjrawlins/projen-cdktn-app-ts.TerraformDependencyConstraint">TerraformDependencyConstraint</a>[]</code> | Terraform providers to install. |
 | <code><a href="#@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.cdktnVersion">cdktnVersion</a></code> | <code>string</code> | Minimum version of the CDKTN to depend on. |
@@ -4951,6 +5036,25 @@ public readonly context: {[ key: string ]: any};
 - *Default:* { excludeStackIdFromLogicalIds: "true", allowSepCharsInLogicalIds: "true" }
 
 Terraform context features.
+
+---
+
+##### `terraformBinaryName`<sup>Optional</sup> <a name="terraformBinaryName" id="@jjrawlins/projen-cdktn-app-ts.CdktnTypeScriptAppOptions.property.terraformBinaryName"></a>
+
+```typescript
+public readonly terraformBinaryName: string;
+```
+
+- *Type:* string
+- *Default:* "terraform"
+
+The name of the Terraform binary to use. Set to "tofu" to use OpenTofu instead of Terraform.
+
+Note: Due to an upstream cdktn-cli issue, the binary name config may not
+propagate correctly. When set to "tofu", the TERRAFORM_BINARY_NAME env var
+is also set on all cdktn tasks as a workaround.
+
+> [https://github.com/open-constructs/cdk-terrain/issues/96](https://github.com/open-constructs/cdk-terrain/issues/96)
 
 ---
 
