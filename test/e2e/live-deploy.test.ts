@@ -111,7 +111,7 @@ describe('E2E live deploy', () => {
       const mainTs = `
 import { App, TerraformStack } from 'cdktn';
 import { Construct } from 'constructs';
-import { provider, sqsQueue, iamRole } from './.gen/providers/aws';
+import { provider, sqsQueue, iamRole } from '../.gen/providers/aws';
 
 class E2ETestStack extends TerraformStack {
   constructor(scope: Construct, id: string) {
