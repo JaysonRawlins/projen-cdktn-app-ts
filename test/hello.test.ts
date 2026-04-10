@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 import { synthSnapshot } from 'projen/lib/util/synth';
 
 import { CdktnTypeScriptApp } from '../src';
@@ -70,6 +73,41 @@ describe('sample code', () => {
     expect(
       snap['test/main.test.ts'].indexOf("import { Testing } from 'cdktn'"),
     ).not.toEqual(-1);
+  });
+
+  test('generates sample code when src and test directories exist but are empty', () => {
+    const outdir = fs.mkdtempSync(path.join(os.tmpdir(), 'cdktn-sample-code-'));
+
+    try {
+      fs.mkdirSync(path.join(outdir, 'src'), { recursive: true });
+      fs.mkdirSync(path.join(outdir, 'test'), { recursive: true });
+
+      const project = new CdktnTypeScriptApp({
+        defaultReleaseBranch: 'main',
+        name: 'test',
+        outdir,
+      });
+
+      const previousDisablePost = process.env.PROJEN_DISABLE_POST;
+      process.env.PROJEN_DISABLE_POST = 'true';
+
+      try {
+        project.synth();
+      } finally {
+        if (previousDisablePost === undefined) {
+          delete process.env.PROJEN_DISABLE_POST;
+        } else {
+          process.env.PROJEN_DISABLE_POST = previousDisablePost;
+        }
+      }
+
+      expect(fs.existsSync(path.join(outdir, 'src', 'main.ts'))).toBe(true);
+      expect(fs.existsSync(path.join(outdir, 'test', 'main.test.ts'))).toBe(
+        true,
+      );
+    } finally {
+      fs.rmSync(outdir, { recursive: true, force: true });
+    }
   });
 });
 

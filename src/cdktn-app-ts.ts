@@ -120,10 +120,7 @@ class SampleCode extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
-    if (
-      fs.pathExistsSync(srcdir) &&
-      fs.readdirSync(srcdir).filter((x) => x.endsWith('.ts'))
-    ) {
+    if (hasTypeScriptSourceFiles(srcdir)) {
       return;
     }
 
@@ -149,10 +146,7 @@ app.synth();`;
     fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
 
     const testdir = path.join(outdir, this.appProject.testdir);
-    if (
-      fs.pathExistsSync(testdir) &&
-      fs.readdirSync(testdir).filter((x) => x.endsWith('.ts'))
-    ) {
+    if (hasTypeScriptSourceFiles(testdir)) {
       return;
     }
 
@@ -176,4 +170,11 @@ test('Snapshot', () => {
       testCode,
     );
   }
+}
+
+function hasTypeScriptSourceFiles(dir: string): boolean {
+  if (!fs.pathExistsSync(dir)) {
+    return false;
+  }
+  return fs.readdirSync(dir).some((entry) => entry.endsWith('.ts'));
 }
