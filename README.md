@@ -10,7 +10,17 @@ It generates:
 - standard `cdktn` tasks: `get`, `synth`, `diff`, `deploy`, `destroy`, `watch`
 - starter application and test files when the project is empty
 
+## Quick Start
+
+Scaffold a new CDK Terrain app in an empty directory:
+
+```sh
+npx projen new --from @jjrawlins/projen-cdktn-app-ts
+```
+
 ## Install
+
+Or add to an existing project:
 
 ```sh
 # npm
