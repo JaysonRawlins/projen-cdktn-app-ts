@@ -136,8 +136,8 @@ class E2ETestStack extends TerraformStack {
       assumeRolePolicy: JSON.stringify({
         Version: '2012-10-17',
         Statement: [{
-          Effect: 'Deny',
-          Principal: { Service: 'none.amazonaws.com' },
+          Effect: 'Allow',
+          Principal: { Service: 'lambda.amazonaws.com' },
           Action: 'sts:AssumeRole',
         }],
       }),
