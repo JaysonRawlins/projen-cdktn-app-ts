@@ -69,7 +69,7 @@ e2e.addJob('e2e', {
     {
       name: 'Setup Terraform',
       uses: 'hashicorp/setup-terraform@v3',
-      with: { 'terraform_wrapper': 'false' },
+      with: { terraform_wrapper: 'false' },
     },
     {
       name: 'Configure AWS credentials',
