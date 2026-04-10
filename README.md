@@ -13,7 +13,11 @@ It generates:
 ## Install
 
 ```sh
+# npm
 npm install --save-dev projen @jjrawlins/projen-cdktn-app-ts
+
+# yarn
+yarn add --dev projen @jjrawlins/projen-cdktn-app-ts
 ```
 
 ## Usage
@@ -54,12 +58,14 @@ npx projen
 
 After synthesis, the generated project includes:
 
-- `yarn get`
-- `yarn synth`
-- `yarn diff`
-- `yarn deploy -- --auto-approve`
-- `yarn destroy -- --auto-approve`
-- `yarn watch`
+| Task | npm | yarn |
+|------|-----|------|
+| Generate providers | `npx projen get` | `yarn get` |
+| Synthesize | `npx projen synth` | `yarn synth` |
+| Diff | `npx projen diff` | `yarn diff` |
+| Deploy | `npx projen deploy -- --auto-approve` | `yarn deploy -- --auto-approve` |
+| Destroy | `npx projen destroy -- --auto-approve` | `yarn destroy -- --auto-approve` |
+| Watch | `npx projen watch` | `yarn watch` |
 
 ## API
 
