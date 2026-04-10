@@ -64,7 +64,7 @@ e2e.addJob('e2e', {
     {
       name: 'Setup Node.js',
       uses: 'actions/setup-node@v4',
-      with: { 'node-version': '18' },
+      with: { 'node-version': 'lts/*' },
     },
     {
       name: 'Configure AWS credentials',
