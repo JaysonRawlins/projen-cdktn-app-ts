@@ -11,19 +11,25 @@ const E2E_TIMEOUT = 5 * 60 * 1000; // 5 minutes
  */
 function run(cmd: string, cwd: string): string {
   console.log(`\n>>> ${cmd}`);
-  const output = execSync(cmd, {
-    cwd,
-    stdio: ['inherit', 'pipe', 'pipe'],
-    timeout: 4 * 60 * 1000, // 4 minutes per command
-    env: {
-      ...process.env,
-      // Ensure Terraform non-interactive mode
-      TF_INPUT: '0',
-    },
-  });
-  const text = output.toString();
-  console.log(text);
-  return text;
+  try {
+    const output = execSync(cmd, {
+      cwd,
+      stdio: ['inherit', 'pipe', 'pipe'],
+      timeout: 4 * 60 * 1000, // 4 minutes per command
+      env: {
+        ...process.env,
+        // Ensure Terraform non-interactive mode
+        TF_INPUT: '0',
+      },
+    });
+    const text = output.toString();
+    console.log(text);
+    return text;
+  } catch (err: any) {
+    console.error('STDOUT:', err.stdout?.toString() ?? '(empty)');
+    console.error('STDERR:', err.stderr?.toString() ?? '(empty)');
+    throw err;
+  }
 }
 
 describe('E2E live deploy', () => {
