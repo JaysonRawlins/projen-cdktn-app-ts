@@ -67,6 +67,11 @@ e2e.addJob('e2e', {
       with: { 'node-version': 'lts/*' },
     },
     {
+      name: 'Setup Terraform',
+      uses: 'hashicorp/setup-terraform@v3',
+      with: { 'terraform_wrapper': 'false' },
+    },
+    {
       name: 'Configure AWS credentials',
       uses: 'aws-actions/configure-aws-credentials@v4',
       with: {
