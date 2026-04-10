@@ -83,6 +83,7 @@ describe('E2E live deploy', () => {
           resolveJsonModule: true,
           outDir: 'lib',
           skipLibCheck: true,
+          types: ['node'],
         },
         include: ['src/**/*.ts', '.gen/**/*.ts'],
       };
@@ -110,23 +111,21 @@ describe('E2E live deploy', () => {
       const mainTs = `
 import { App, TerraformStack } from 'cdktn';
 import { Construct } from 'constructs';
+import { provider, sqsQueue, iamRole } from './.gen/providers/aws';
 
 class E2ETestStack extends TerraformStack {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    // Provider and resources are imported from generated bindings
-    const aws = require('./.gen/providers/aws');
-
-    new aws.provider.AwsProvider(this, 'aws', {
+    new provider.AwsProvider(this, 'aws', {
       region: 'us-east-2',
     });
 
-    new aws.sqsQueue.SqsQueue(this, 'queue', {
+    new sqsQueue.SqsQueue(this, 'queue', {
       name: 'cdktn-e2e-test-queue',
     });
 
-    new aws.iamRole.IamRole(this, 'role', {
+    new iamRole.IamRole(this, 'role', {
       name: 'cdktn-e2e-test-role',
       assumeRolePolicy: JSON.stringify({
         Version: '2012-10-17',
