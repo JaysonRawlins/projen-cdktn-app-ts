@@ -71,6 +71,7 @@ export class CdktnConfig extends Component {
 
     this.json = new JsonFile(project, 'cdktf.json', {
       omitEmpty: true,
+      readonly: false, // cdktn CLI writes projectId telemetry back to this file at runtime
       obj: {
         app: options.app,
         language: 'typescript',
