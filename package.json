@@ -37,6 +37,8 @@
     "organization": false
   },
   "devDependencies": {
+    "@aws-sdk/client-iam": "^3.1028.0",
+    "@aws-sdk/client-sqs": "^3.1028.0",
     "@stylistic/eslint-plugin": "^2",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",

@@ -15,7 +15,12 @@ const project = new cdk.JsiiProject({
 
   peerDeps: ['projen'],
   bundledDeps: ['fs-extra'],
-  devDeps: ['@types/fs-extra', 'projen'],
+  devDeps: [
+    '@types/fs-extra',
+    'projen',
+    '@aws-sdk/client-sqs',
+    '@aws-sdk/client-iam',
+  ],
 
   releaseToNpm: true,
   npmTrustedPublishing: true,
