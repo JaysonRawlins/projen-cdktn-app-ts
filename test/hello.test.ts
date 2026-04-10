@@ -231,6 +231,49 @@ describe('other tasks', () => {
     ]);
   });
 
+  test('sets TERRAFORM_BINARY_NAME env on tasks when terraformBinaryName is tofu', () => {
+    const project = new CdktnTypeScriptApp({
+      name: 'hello',
+      defaultReleaseBranch: 'main',
+      terraformBinaryName: 'tofu',
+    });
+    const files = synthSnapshot(project);
+    const tasks = files['.projen/tasks.json'].tasks;
+    expect(tasks.synth.env).toStrictEqual({
+      TERRAFORM_BINARY_NAME: 'tofu',
+    });
+    expect(tasks.deploy.env).toStrictEqual({
+      TERRAFORM_BINARY_NAME: 'tofu',
+    });
+    expect(tasks.destroy.env).toStrictEqual({
+      TERRAFORM_BINARY_NAME: 'tofu',
+    });
+    expect(tasks.get.env).toStrictEqual({ TERRAFORM_BINARY_NAME: 'tofu' });
+    expect(tasks.diff.env).toStrictEqual({ TERRAFORM_BINARY_NAME: 'tofu' });
+    expect(tasks.watch.env).toStrictEqual({
+      TERRAFORM_BINARY_NAME: 'tofu',
+    });
+  });
+
+  test('does not set TERRAFORM_BINARY_NAME when using default terraform', () => {
+    const project = new CdktnTypeScriptApp({
+      name: 'hello',
+      defaultReleaseBranch: 'main',
+    });
+    const files = synthSnapshot(project);
+    expect(files['.projen/tasks.json'].tasks.synth.env).toBeUndefined();
+  });
+
+  test('writes terraformBinaryName to cdktf.json', () => {
+    const project = new CdktnTypeScriptApp({
+      name: 'hello',
+      defaultReleaseBranch: 'main',
+      terraformBinaryName: 'tofu',
+    });
+    const files = synthSnapshot(project);
+    expect(files['cdktf.json'].terraformBinaryName).toBe('tofu');
+  });
+
   test('removes bundle from pre-compile', () => {
     const project = new CdktnTypeScriptApp({
       name: 'hello',

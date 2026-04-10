@@ -74,7 +74,9 @@ export class CdktnTypeScriptApp extends TypeScriptAppProject {
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
 
-    this.cdktnTasks = new CdktnTasks(this);
+    this.cdktnTasks = new CdktnTasks(this, {
+      terraformBinaryName: options.terraformBinaryName,
+    });
 
     // add synth to the build
     this.postCompileTask.spawn(this.cdktnTasks.synth);
