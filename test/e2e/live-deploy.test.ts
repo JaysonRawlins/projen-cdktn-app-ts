@@ -48,7 +48,7 @@ describe('E2E live deploy', () => {
 
   it(
     'deploys, verifies, and destroys AWS resources',
-    async () => {
+    () => {
       // ---------------------------------------------------------------
       // 1. Scaffold a minimal CDK Terrain app
       // ---------------------------------------------------------------
@@ -166,44 +166,25 @@ app.synth();
         deployed = true;
 
         // -------------------------------------------------------------
-        // 4. Verify resources with AWS SDK
+        // 4. Verify resources via AWS CLI
         // -------------------------------------------------------------
-        // Dynamic imports so that @aws-sdk packages only need to be
-        // available at E2E runtime (not at compile time for this test
-        // project).
-        const { SQSClient, GetQueueUrlCommand, GetQueueAttributesCommand } =
-          // eslint-disable-next-line @typescript-eslint/no-require-imports
-          require('@aws-sdk/client-sqs');
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const { IAMClient, GetRoleCommand } = require('@aws-sdk/client-iam');
-
-        const sqsClient = new SQSClient({ region: 'us-east-2' });
-        const iamClient = new IAMClient({ region: 'us-east-2' });
+        const region = process.env.AWS_REGION ?? 'us-east-2';
 
         // Verify SQS queue
-        const queueUrlRes = await sqsClient.send(
-          new GetQueueUrlCommand({ QueueName: 'cdktn-e2e-test-queue' }),
-        );
-        expect(queueUrlRes.QueueUrl).toBeDefined();
-        console.log('SQS queue URL:', queueUrlRes.QueueUrl);
-
-        const queueAttrs = await sqsClient.send(
-          new GetQueueAttributesCommand({
-            QueueUrl: queueUrlRes.QueueUrl,
-            AttributeNames: ['QueueArn'],
-          }),
-        );
-        expect(queueAttrs.Attributes?.QueueArn).toContain(
-          'cdktn-e2e-test-queue',
-        );
+        const queueUrl = execSync(
+          `aws sqs get-queue-url --queue-name cdktn-e2e-test-queue --region ${region} --output text --query QueueUrl`,
+          { encoding: 'utf-8' },
+        ).trim();
+        expect(queueUrl).toContain('cdktn-e2e-test-queue');
+        console.log('SQS queue URL:', queueUrl);
 
         // Verify IAM role
-        const roleRes = await iamClient.send(
-          new GetRoleCommand({ RoleName: 'cdktn-e2e-test-role' }),
-        );
-        expect(roleRes.Role).toBeDefined();
-        expect(roleRes.Role!.RoleName).toBe('cdktn-e2e-test-role');
-        console.log('IAM role ARN:', roleRes.Role!.Arn);
+        const roleName = execSync(
+          `aws iam get-role --role-name cdktn-e2e-test-role --output text --query Role.RoleName`,
+          { encoding: 'utf-8' },
+        ).trim();
+        expect(roleName).toBe('cdktn-e2e-test-role');
+        console.log('IAM role verified:', roleName);
       } finally {
         // -------------------------------------------------------------
         // 5. Destroy — always attempt cleanup
@@ -222,27 +203,23 @@ app.synth();
       // ---------------------------------------------------------------
       // 6. Verify resources are cleaned up
       // ---------------------------------------------------------------
-      const { SQSClient: SQSClient2, GetQueueUrlCommand: GetQueueUrlCmd2 } =
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        require('@aws-sdk/client-sqs');
-      const { IAMClient: IAMClient2, GetRoleCommand: GetRoleCmd2 } =
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        require('@aws-sdk/client-iam');
-
-      const sqsCheck = new SQSClient2({ region: 'us-east-2' });
-      const iamCheck = new IAMClient2({ region: 'us-east-2' });
+      const verifyRegion = process.env.AWS_REGION ?? 'us-east-2';
 
       // SQS queue should be gone
-      await expect(
-        sqsCheck.send(
-          new GetQueueUrlCmd2({ QueueName: 'cdktn-e2e-test-queue' }),
+      expect(() =>
+        execSync(
+          `aws sqs get-queue-url --queue-name cdktn-e2e-test-queue --region ${verifyRegion}`,
+          { stdio: 'pipe' },
         ),
-      ).rejects.toThrow();
+      ).toThrow();
 
       // IAM role should be gone
-      await expect(
-        iamCheck.send(new GetRoleCmd2({ RoleName: 'cdktn-e2e-test-role' })),
-      ).rejects.toThrow();
+      expect(() =>
+        execSync(
+          'aws iam get-role --role-name cdktn-e2e-test-role',
+          { stdio: 'pipe' },
+        ),
+      ).toThrow();
 
       console.log('All resources verified as destroyed.');
     },
