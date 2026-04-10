@@ -180,7 +180,7 @@ app.synth();
 
         // Verify IAM role
         const roleName = execSync(
-          `aws iam get-role --role-name cdktn-e2e-test-role --output text --query Role.RoleName`,
+          'aws iam get-role --role-name cdktn-e2e-test-role --output text --query Role.RoleName',
           { encoding: 'utf-8' },
         ).trim();
         expect(roleName).toBe('cdktn-e2e-test-role');
