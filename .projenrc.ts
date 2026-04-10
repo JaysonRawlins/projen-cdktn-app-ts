@@ -13,6 +13,10 @@ const project = new cdk.JsiiProject({
   description:
     'CDK Terrain (CDKTN) app project type for projen in TypeScript',
 
+  githubOptions: {
+    mergify: false,
+  },
+
   peerDeps: ['projen'],
   bundledDeps: ['fs-extra'],
   devDeps: ['@types/fs-extra', 'projen'],
@@ -39,6 +43,21 @@ project.testTask.reset(
   'jest --passWithNoTests --updateSnapshot --testPathIgnorePatterns=test/integration --testPathIgnorePatterns=test/e2e',
 );
 project.testTask.spawn(project.eslint!.eslintTask);
+
+// ---------- Auto-merge for upgrade PRs ----------
+const upgradeWorkflow = project.github!.tryFindWorkflow('upgrade-main')!;
+upgradeWorkflow.file!.addOverride(
+  'jobs.pr.permissions.pull-requests',
+  'write',
+);
+upgradeWorkflow.file!.addOverride('jobs.pr.steps.5', {
+  name: 'Enable auto-merge',
+  if: "steps.create-pr.outputs.pull-request-number != ''",
+  run: 'gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"',
+  env: {
+    GH_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
+  },
+});
 
 // ---------- E2E workflow ----------
 const e2e = project.github!.addWorkflow('e2e');
