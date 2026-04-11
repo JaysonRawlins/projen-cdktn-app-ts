@@ -28,7 +28,7 @@ const project = new cdk.JsiiProject({
     preBuildSteps: [
       {
         name: 'Audit bundled dependencies',
-        run: 'audit-ci --critical --report-type summary',
+        run: 'npx audit-ci --critical --report-type summary',
       },
     ],
   },
