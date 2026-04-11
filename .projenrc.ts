@@ -19,7 +19,7 @@ const project = new cdk.JsiiProject({
 
   peerDeps: ['projen'],
   bundledDeps: ['fs-extra'],
-  devDeps: ['@types/fs-extra', 'projen'],
+  devDeps: ['@types/fs-extra', 'audit-ci', 'projen'],
 
   releaseToNpm: true,
   npmTrustedPublishing: true,
@@ -28,7 +28,7 @@ const project = new cdk.JsiiProject({
     preBuildSteps: [
       {
         name: 'Audit bundled dependencies',
-        run: 'npx audit-ci --critical --report-type summary',
+        run: 'audit-ci --critical --report-type summary',
       },
     ],
   },
