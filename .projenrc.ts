@@ -23,6 +23,15 @@ const project = new cdk.JsiiProject({
 
   releaseToNpm: true,
   npmTrustedPublishing: true,
+
+  buildWorkflowOptions: {
+    preBuildSteps: [
+      {
+        name: 'Audit bundled dependencies',
+        run: 'npx audit-ci --critical --report-type summary',
+      },
+    ],
+  },
 });
 
 // ---------- Integration test task ----------
@@ -43,21 +52,6 @@ project.testTask.reset(
   'jest --passWithNoTests --updateSnapshot --testPathIgnorePatterns=test/integration --testPathIgnorePatterns=test/e2e',
 );
 project.testTask.spawn(project.eslint!.eslintTask);
-
-// ---------- Auto-merge for upgrade PRs ----------
-const upgradeWorkflow = project.github!.tryFindWorkflow('upgrade-main')!;
-upgradeWorkflow.file!.addOverride(
-  'jobs.pr.permissions.pull-requests',
-  'write',
-);
-upgradeWorkflow.file!.addOverride('jobs.pr.steps.5', {
-  name: 'Enable auto-merge',
-  if: "steps.create-pr.outputs.pull-request-number != ''",
-  run: 'gh pr merge --auto --squash "${{ steps.create-pr.outputs.pull-request-number }}"',
-  env: {
-    GH_TOKEN: '${{ secrets.PROJEN_GITHUB_TOKEN }}',
-  },
-});
 
 // ---------- E2E workflow ----------
 const e2e = project.github!.addWorkflow('e2e');

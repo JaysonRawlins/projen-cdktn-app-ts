@@ -20,8 +20,6 @@ jobs:
           ref: main
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Audit bundled dependencies
-        run: npx audit-ci --critical --report-type summary
       - name: Upgrade dependencies
         run: npx projen upgrade
       - name: Find mutations
@@ -44,7 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
     if: ${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
