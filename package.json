@@ -48,19 +48,19 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.3.0",
-    "jest-junit": "^17",
+    "jest-junit": "^16",
     "jsii": "~5.9.0",
     "jsii-diff": "^1.127.0",
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.127.0",
     "jsii-rosetta": "~5.9.0",
-    "projen": "^0.99.52",
+    "projen": "0.99.52",
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.2"
   },
   "peerDependencies": {
-    "projen": "^0.99.42"
+    "projen": "^0.99.52"
   },
   "dependencies": {
     "fs-extra": "^10.1.0"
