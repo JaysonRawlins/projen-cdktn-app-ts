@@ -18,6 +18,11 @@ const project = new cdk.JsiiProject({
 
   githubOptions: {
     mergify: false,
+    pullRequestLintOptions: {
+      semanticTitleOptions: {
+        types: ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'chore', 'revert', 'ci', 'build', 'deps', 'wip', 'release'],
+      },
+    },
   },
 
   peerDeps: ['projen'],
