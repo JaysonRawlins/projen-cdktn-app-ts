@@ -1,4 +1,4 @@
-import { cdk, YamlFile } from 'projen';
+import { cdk, javascript, YamlFile } from 'projen';
 import { Dependabot, DependabotScheduleInterval, VersioningStrategy } from 'projen/lib/github';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 
@@ -9,6 +9,10 @@ const project = new cdk.JsiiProject({
   jsiiVersion: '~5.9.0',
   name: '@jjrawlins/projen-cdktn-app-ts',
   projenrcTs: true,
+  packageManager: javascript.NodePackageManager.PNPM,
+  pnpmVersion: '11.13.0',
+  // pnpm 11 needs node >= 22.5 (node:sqlite) on the runner.
+  workflowNodeVersion: '24.x',
   // Bumped to pick up Dependabot.cooldown option (PR #4650, 2026-04-10).
   projenVersion: '0.99.52',
   repositoryUrl:
@@ -118,8 +122,13 @@ e2e.addJob('e2e', {
       },
     },
     {
+      name: 'Setup pnpm',
+      uses: 'pnpm/action-setup@v5',
+      with: { version: '11.13.0' },
+    },
+    {
       name: 'Install dependencies',
-      run: 'yarn install --check-files',
+      run: 'pnpm install --frozen-lockfile',
     },
     {
       name: 'Build',
@@ -153,7 +162,9 @@ const dependabot = new Dependabot(project.github!, {
   cooldown: {
     defaultDays: 7,
     semverMinorDays: 7,
-    semverPatchDays: 3,
+    // Keep every cooldown >= the pnpm minimumReleaseAge gate (7d)
+    // (dependabot-core#13165): with cooldown >= gate, PRs are born age-clean.
+    semverPatchDays: 7,
     include: ['*'],
   },
   groups: {
@@ -173,6 +184,34 @@ dependabot.config.updates.push({
   'schedule': { interval: 'weekly' },
   'open-pull-requests-limit': 0,
   'labels': ['dependencies', 'github-actions'],
+});
+
+new YamlFile(project, 'pnpm-workspace.yaml', {
+  obj: {
+    // 7d age gate applied at RESOLUTION time — covers transitives, the gap
+    // Dependabot's cooldown can't close. Must stay <= every Dependabot
+    // cooldown or bump PRs can't resolve.
+    minimumReleaseAge: 10080,
+    // Flat node_modules: jsii bundledDependencies hard-error under pnpm's
+    // isolated linker at `pnpm pack`.
+    nodeLinker: 'hoisted',
+    allowBuilds: {
+      // Transitive of eslint-import-resolver-typescript; ships prebuilt
+      // binaries, its build script is an unneeded fallback.
+      'unrs-resolver': false,
+    },
+  },
+});
+
+// Two-witness on the age gate: verify the ARTIFACT (registry publish date of
+// every resolved version), not the resolver that produced it.
+const auditTask = project.addTask('audit:lockfile-age', {
+  exec: 'node .github/scripts/audit-lockfile-age.mjs pnpm-lock.yaml 168',
+  description: 'Verify every pnpm-lock.yaml entry is at least 168h old on the registry',
+});
+project.buildWorkflow?.addPostBuildSteps({
+  name: 'Audit lockfile age',
+  run: `npx projen ${auditTask.name}`,
 });
 
 project.tryRemoveFile('.github/workflows/security.yml');
