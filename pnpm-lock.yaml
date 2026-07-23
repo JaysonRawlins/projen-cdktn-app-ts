@@ -38,7 +38,7 @@ importers:
         version: 12.7.3
       constructs:
         specifier: ^10.0.0
-        version: 10.6.0
+        version: 10.7.0
       eslint:
         specifier: ^9
         version: 9.39.5
@@ -71,7 +71,7 @@ importers:
         version: 5.9.55
       projen:
         specifier: 0.99.52
-        version: 0.99.52(constructs@10.6.0)
+        version: 0.99.52(constructs@10.7.0)
       ts-jest:
         specifier: ^29.4.9
         version: 29.4.11(@babel/core@7.29.7)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@25.9.5)(ts-node@10.9.2(@types/node@25.9.5)(typescript@6.0.3)))(typescript@6.0.3)
@@ -1081,8 +1081,8 @@ packages:
     resolution: {integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==}
     engines: {'0': node >= 6.0}
 
-  constructs@10.6.0:
-    resolution: {integrity: sha512-TxHOnBO5zMo/G76ykzGF/wMpEHu257TbWiIxP9K0Yv/+t70UzgBQiTqjkAsWOPC6jW91DzJI0+ehQV6xDRNBuQ==}
+  constructs@10.7.0:
+    resolution: {integrity: sha512-Vzwc30bMywc7DCzX8XOyuZbsBmfXTCrn6HHmhhELZK1J5dnUWwJ5uL7hBXGGq7xFPVOOO6cs9FwaxOshAxgcWQ==}
 
   conventional-changelog-angular@6.0.0:
     resolution: {integrity: sha512-6qLgrBF4gueoC7AFVHu51nHL9pF9FRjXrH+ceVf7WmAfH3gs+gEYOkvxhjMPjZu57I4AGUGoNTY8V7Hrgf1uqg==}
@@ -4371,7 +4371,7 @@ snapshots:
       readable-stream: 3.6.2
       typedarray: 0.0.6
 
-  constructs@10.6.0: {}
+  constructs@10.7.0: {}
 
   conventional-changelog-angular@6.0.0:
     dependencies:
@@ -6131,9 +6131,9 @@ snapshots:
 
   process-nextick-args@2.0.1: {}
 
-  projen@0.99.52(constructs@10.6.0):
+  projen@0.99.52(constructs@10.7.0):
     dependencies:
-      constructs: 10.6.0
+      constructs: 10.7.0
 
   punycode@2.3.1: {}
 
