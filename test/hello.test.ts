@@ -45,6 +45,19 @@ describe('cdktn deps', () => {
       '0.22.0',
     );
   });
+
+  test('pins shell-quote resolution to clear the cdktn-cli OSV finding', () => {
+    const project = new CdktnTypeScriptApp({
+      cdktnVersion: '0.22.0',
+      defaultReleaseBranch: 'main',
+      name: 'test',
+    });
+    const snap = synthSnapshot(project);
+    expect(snap['package.json'].resolutions).toHaveProperty(
+      'shell-quote',
+      '^1.8.4',
+    );
+  });
 });
 
 describe('sample code', () => {

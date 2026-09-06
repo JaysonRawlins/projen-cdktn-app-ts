@@ -71,6 +71,8 @@ export class CdktnTypeScriptApp extends TypeScriptAppProject {
         : 'cdktn-cli',
     );
 
+    this.package.addPackageResolutions('shell-quote@^1.8.4');
+
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
 
