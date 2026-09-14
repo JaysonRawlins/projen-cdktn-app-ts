@@ -9,6 +9,7 @@ import {
 import { CdktnConfig, CdktnConfigCommonOptions } from './cdktn-config';
 import { CdktnDeps, CdktnDepsCommonOptions } from './cdktn-deps';
 import { CdktnTasks } from './cdktn-tasks';
+import { DEFAULT_TYPESCRIPT_VERSION } from './typescript-version';
 
 export interface CdktnTypeScriptAppOptions
   extends TypeScriptProjectOptions,
@@ -48,6 +49,8 @@ export class CdktnTypeScriptApp extends TypeScriptAppProject {
     super({
       ...options,
       sampleCode: false,
+      // ts-node 10 cannot load TypeScript 7 — see DEFAULT_TYPESCRIPT_VERSION.
+      typescriptVersion: options.typescriptVersion ?? DEFAULT_TYPESCRIPT_VERSION,
       bundlerOptions: {
         ...options.bundlerOptions,
         addToPreCompile: false,

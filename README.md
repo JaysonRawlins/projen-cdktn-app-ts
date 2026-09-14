@@ -63,6 +63,25 @@ npx projen
 - `terraformModules` — adds modules to `cdktf.json`
 - `cdktfOut` — customizes the synthesis output directory
 - `context` — merges additional context values into `cdktf.json`
+- `typescriptVersion` — overrides the generated `typescript` dependency (see below)
+
+## TypeScript Version
+
+Generated projects run their `cdktf.json` `app` command through `ts-node`, and
+ts-node 10 (its final release) reads `ts.sys` off the TypeScript module at
+startup. TypeScript 7's native port no longer exposes that surface, so a
+floating `typescript` dependency resolves to 7.x and every `cdktn synth` dies
+with:
+
+```
+TypeError: Cannot read properties of undefined (reading 'fileExists')
+    at readConfig (.../ts-node/dist/configuration.js:91:33)
+```
+
+Generated projects therefore default to `typescript@^6.0.0`, which is verified
+to work with ts-node 10. Passing `typescriptVersion` explicitly overrides this;
+if you point it at 7.x you will also need to move the `app` command off ts-node
+(for example to `tsx`).
 
 ## Generated Tasks
 

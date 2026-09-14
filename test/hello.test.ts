@@ -4,6 +4,7 @@ import * as path from 'path';
 import { synthSnapshot } from 'projen/lib/util/synth';
 
 import { CdktnTypeScriptApp } from '../src';
+import { DEFAULT_TYPESCRIPT_VERSION } from '../src/typescript-version';
 
 describe('cdktn deps', () => {
   test('uses cdktn with pinned version', () => {
@@ -283,5 +284,31 @@ describe('other tasks', () => {
     expect(
       files['.projen/tasks.json'].tasks['pre-compile'].steps,
     ).toBeUndefined();
+  });
+});
+
+describe('typescript version', () => {
+  test('caps typescript below 7 so ts-node can load it', () => {
+    const project = new CdktnTypeScriptApp({
+      defaultReleaseBranch: 'main',
+      name: 'test',
+    });
+    const snap = synthSnapshot(project);
+    expect(snap['package.json'].devDependencies.typescript).toStrictEqual(
+      DEFAULT_TYPESCRIPT_VERSION,
+    );
+    expect(DEFAULT_TYPESCRIPT_VERSION).toStrictEqual('^6.0.0');
+  });
+
+  test('an explicit typescriptVersion still wins', () => {
+    const project = new CdktnTypeScriptApp({
+      defaultReleaseBranch: 'main',
+      name: 'test',
+      typescriptVersion: '~5.9.0',
+    });
+    const snap = synthSnapshot(project);
+    expect(snap['package.json'].devDependencies.typescript).toStrictEqual(
+      '~5.9.0',
+    );
   });
 });
