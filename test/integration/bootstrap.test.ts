@@ -3,10 +3,22 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
+import { DEFAULT_TYPESCRIPT_VERSION } from '../../src/typescript-version';
+
 // Integration tests are slow due to npm pack/install/projen synth
 jest.setTimeout(120_000);
 
 const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
+
+/**
+ * Bootstrap with the same projen this package builds and peer-depends on.
+ * Floating it pulls whatever is latest, and projen 0.100+ dropped the CLI's
+ * `.projenrc.js` fallback, so `npx projen` on a fresh directory exits with
+ * "Unable to find projen project".
+ */
+const PROJEN_VERSION: string = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf-8'),
+).devDependencies.projen;
 
 describe('integration: bootstrap', () => {
   let tarballPath: string;
@@ -57,7 +69,7 @@ describe('integration: bootstrap', () => {
     execSync(
       [
         'npm init -y',
-        `npm install projen ${tarballPath} --save-dev`,
+        `npm install projen@${PROJEN_VERSION} ${tarballPath} --save-dev`,
         'npx projen --no-post',
       ].join(' && '),
       {
@@ -114,6 +126,14 @@ describe('integration: bootstrap', () => {
     test('package.json has cdktn-cli in devDependencies', () => {
       const pkg = readJsonFile(projectDir, 'package.json');
       expect(pkg.devDependencies).toHaveProperty('cdktn-cli', '0.22.0');
+    });
+
+    test('package.json caps typescript below 7 for ts-node', () => {
+      const pkg = readJsonFile(projectDir, 'package.json');
+      expect(pkg.devDependencies).toHaveProperty(
+        'typescript',
+        DEFAULT_TYPESCRIPT_VERSION,
+      );
     });
 
     test('cdktf.json exists with correct language', () => {

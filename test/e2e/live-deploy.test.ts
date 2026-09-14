@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
+import { DEFAULT_TYPESCRIPT_VERSION } from '../../src/typescript-version';
+
 const E2E_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 /**
@@ -69,7 +71,9 @@ describe('E2E live deploy', () => {
           '@types/node': '*',
           'cdktn-cli': '*',
           'ts-node': '*',
-          'typescript': '*',
+          // Must match what CdktnTypeScriptApp generates: a floating
+          // `typescript` resolves to 7.x, which ts-node 10 cannot load.
+          'typescript': DEFAULT_TYPESCRIPT_VERSION,
         },
       };
       fs.writeFileSync(
