@@ -59,7 +59,7 @@ importers:
         version: 5.9.54
       jsii-diff:
         specifier: ^1.127.0
-        version: 1.140.0
+        version: 1.143.0
       jsii-docgen:
         specifier: ^10.5.0
         version: 10.12.6(jsii-rosetta@5.9.68)
@@ -447,8 +447,16 @@ packages:
     resolution: {integrity: sha512-NTiY2Nd9ZtACPZjaU+k9+oiaD191Yw0FoiUR7bB+NoOtB5nMEhrLKn5O/PYmCIZGK0G1JaJs+PmLcyj68J6RKw==}
     engines: {node: '>= 14.17.0'}
 
+  '@jsii/check-node@1.143.0':
+    resolution: {integrity: sha512-4BawLEyDtjSteM7PRamldWBpLv6yJ1hW6JTBSFMN1Z2fcE2UbN19r+UQ6IvpIRlYapiI1ILYUGhIK39YvqE04Q==}
+    engines: {node: '>= 14.17.0'}
+
   '@jsii/spec@1.140.0':
     resolution: {integrity: sha512-1rGS+iJtejQ3ybSJfV0if9PzZuSQmORbVF3MkqE0csatF//Rj8raCqptZLMX6rkdfZ8C2Jsw5hU4PrmuCzBk6A==}
+    engines: {node: '>= 14.17.0'}
+
+  '@jsii/spec@1.143.0':
+    resolution: {integrity: sha512-37FQ1/6yzFBYVMSFkeDajUNjf/9OVgyi1zRh6aMGFjKfgiagVDoI83Pn2h5i3WgJzDXx556+BFevYtfYoS1dqg==}
     engines: {node: '>= 14.17.0'}
 
   '@napi-rs/wasm-runtime@1.1.6':
@@ -1548,9 +1556,6 @@ packages:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
 
-  flatted@3.4.2:
-    resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
-
   flatted@3.4.4:
     resolution: {integrity: sha512-5+ybhBZANEJxaH3X5evAFatUxLfEHSr7n6kYJ+1Qd0mUqr4eu9gIf6GDbWHf8RJijHrjjO8G+la14SlL2SeS1Q==}
 
@@ -1681,6 +1686,9 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  graceful-fs@4.2.12:
+    resolution: {integrity: sha512-iuyGF2E4oafQfPsRrG2wtY2ILupMhvtdrhzrxB+0VcjsPpSPttpfYdjnGFGsTi5MaJFjI1jOKHPQ6UTbTj9TAw==}
 
   handlebars@4.7.9:
     resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
@@ -2095,8 +2103,8 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  jsii-diff@1.140.0:
-    resolution: {integrity: sha512-nK6y3X08YDt7hrkgl45gn9uzQFioqeBLXwj/OZ1AyeejvvPQJvaNuIogRdrfjBuNuksjnQlW/RJk8ocgzaXCvA==}
+  jsii-diff@1.143.0:
+    resolution: {integrity: sha512-GrmdqKGB07qAetBeuojVKwj4tNZdYS9pWDVRQryKAvmgTOycjtrBpwKRsZAv8LOUbr/AmuGzFm4Q4IXC6g7lzw==}
     engines: {node: '>= 14.17.0'}
     hasBin: true
 
@@ -2115,6 +2123,11 @@ packages:
 
   jsii-reflect@1.140.0:
     resolution: {integrity: sha512-8bRD6WSQfWrB6/31sz92bi21HWaMVzvxZUgaJt/IiT3RqGKc57dO+idekn8WNpTBneE9vVhj24UDExHH8YfJAQ==}
+    engines: {node: '>= 14.17.0'}
+    hasBin: true
+
+  jsii-reflect@1.143.0:
+    resolution: {integrity: sha512-lN+m5cRFzxF4TYJp2XS6qHRtDal6PMO/+aEojcg2y97Q128ynbNQfri/zO9CWFp/m0sm+XkRqQbTsdZVPBiMNg==}
     engines: {node: '>= 14.17.0'}
     hasBin: true
 
@@ -2398,6 +2411,10 @@ packages:
 
   oo-ascii-tree@1.140.0:
     resolution: {integrity: sha512-swJJN43RwwtZAtNQu03W8rqNtTUvq9T4eGU4KupRq7I9/R3exHobbF/OOm5sl6tGcumsQrNU97NBx7x+LEIPgA==}
+    engines: {node: '>= 14.17.0'}
+
+  oo-ascii-tree@1.143.0:
+    resolution: {integrity: sha512-tMgHaPcFgtJbfStU9qNgvch8DjYs5+V7gO0VGrtwRZPpaQe7l/wd87rGBXjm3+gEEQ5mT24aVAdvKyQg/IjWdQ==}
     engines: {node: '>= 14.17.0'}
 
   optionator@0.9.4:
@@ -2686,6 +2703,11 @@ packages:
 
   semver@7.8.5:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.8.6:
+    resolution: {integrity: sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -3679,7 +3701,14 @@ snapshots:
       chalk: 4.1.2
       semver: 7.8.5
 
+  '@jsii/check-node@1.143.0':
+    dependencies:
+      chalk: 4.1.2
+      semver: 7.8.6
+
   '@jsii/spec@1.140.0': {}
+
+  '@jsii/spec@1.143.0': {}
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
@@ -4928,10 +4957,8 @@ snapshots:
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.4.2
+      flatted: 3.4.4
       keyv: 4.5.4
-
-  flatted@3.4.2: {}
 
   flatted@3.4.4: {}
 
@@ -4954,7 +4981,7 @@ snapshots:
 
   fs-extra@8.1.0:
     dependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.12
       jsonfile: 4.0.0
       universalify: 0.1.2
 
@@ -5080,6 +5107,8 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
+
+  graceful-fs@4.2.12: {}
 
   handlebars@4.7.9:
     dependencies:
@@ -5670,12 +5699,12 @@ snapshots:
 
   jsesc@3.1.0: {}
 
-  jsii-diff@1.140.0:
+  jsii-diff@1.143.0:
     dependencies:
-      '@jsii/check-node': 1.140.0
-      '@jsii/spec': 1.140.0
+      '@jsii/check-node': 1.143.0
+      '@jsii/spec': 1.143.0
       fs-extra: 10.1.0
-      jsii-reflect: 1.140.0
+      jsii-reflect: 1.143.0
       log4js: 6.9.1
       yargs: 17.7.3
     transitivePeerDependencies:
@@ -5716,6 +5745,15 @@ snapshots:
       chalk: 4.1.2
       fs-extra: 10.1.0
       oo-ascii-tree: 1.140.0
+      yargs: 17.7.3
+
+  jsii-reflect@1.143.0:
+    dependencies:
+      '@jsii/check-node': 1.143.0
+      '@jsii/spec': 1.143.0
+      chalk: 4.1.2
+      fs-extra: 10.1.0
+      oo-ascii-tree: 1.143.0
       yargs: 17.7.3
 
   jsii-rosetta@5.9.68:
@@ -5775,7 +5813,7 @@ snapshots:
 
   jsonfile@4.0.0:
     optionalDependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.12
 
   jsonfile@6.2.1:
     dependencies:
@@ -6021,6 +6059,8 @@ snapshots:
       mimic-fn: 2.1.0
 
   oo-ascii-tree@1.140.0: {}
+
+  oo-ascii-tree@1.143.0: {}
 
   optionator@0.9.4:
     dependencies:
@@ -6292,6 +6332,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.8.5: {}
+
+  semver@7.8.6: {}
 
   set-function-length@1.2.2:
     dependencies:
